@@ -1,0 +1,64 @@
+/* 
+    Document   : estilos
+    Created on : 09/06/2013, 09:36:05
+    Author     : marcosptfNetbeans
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.lixo{
+    position:relative;
+}
+
+fieldset{
+    width: 2000px;
+    height: 1000px;
+/*                top:15px;
+    position:relative;*/
+}
+
+.lixeiraDiv{
+    width : 200px;
+    height: 100px; 
+    /*border: solid black 2px;*/
+/*                position: absolute;
+    top:70px;*/
+}
+
+#lixeiraDiv2{
+    left:220px;
+}
+
+#lixeiraDiv3{
+    left:430px;
+}
+
+#lixeiraDiv4{
+    left:640px;
+}
+
+#lixeiraDiv5{
+    left:850px;
+}
+
+#lixeiraDiv6{
+    left:1060px;
+}
+
+.tipoLixoCss{
+    cursor:move;
+    width : 50px;
+    height: 50px; 
+/*                position: relative;
+    top:100px;*/
+
+}
+
+.texto1{
+    text-align: right;
+}
+
+
+
+
+

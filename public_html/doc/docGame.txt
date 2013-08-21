@@ -1,0 +1,63 @@
+falta implementar:
+
+1.pontuação                                                                     ===>true
+2.ranking de pontuação de jogadores                                             ===>?
+3.colocar mais itens no jogo                                                    ===>true
+4.colocar css point no ponteiro do mouse                                        ===>true
+5. (?) depois q a pessoa colocar o item na respectiva cesta, poderiamos mostrar 
+uma imagem exibindo uma imagem se esta correro ou errado                        ===>true
+6.a tela principal do game deve conter o ranking de pontuação dos 
+gamers que ja jogaram                                                           ===>?
+6.1 implementar alguls efeitos                                                  ===>...
+6.1.1 efeito do wordpress de balançar a tela quando o o gamer errar             ===>...
+6.1.2 efeito quando o gamer acertar                                             ===>...
+6.1.3 efeito ilustrativo quando for exibir o tutorial do game                   ===>false
+6.2 depois q o jogador colocar o item na cesta, poderiamos guardar o nome dos 
+itens para exibir no final os que ele errou                                     ===>ñ fazer
+7.integração com facebook                                                       ===>false
+8.guardar informações e dados no bando mysql do jsninja                         ===>?
+9.hospedar aplicação no jsninja                                                 ===>false
+10.colocar um nome/logo bem chamativo e convidativo                             ===>false
+11.ñ esquecer de fazer uma apresentação em .ppt bem explicativa sobre o game    ===>false
+12.deve ser bem testado(!)                                                      ===>false
+
+13.tela de abertura                                                             
+13.1 deve ser limpa, conter o logo da Titans como sustentabilidade e chamando o gamer para jogar
+13.2 quando o gamer clicar em "jogue", devera aparecer uma <div> solicitando que ele coloque o seu nickname
+13.3 após ele colocar o nickname, se ele ja tiver pontuação será sobrescrita.
+13.4 depois deve perguntar se ele deseja ver o mini tutorial ou ñ
+13.5 após o tutorial, o jogo começa
+
+14 definicoes gerais do game
+14.1.telas:
+
+14.1.1 tela de abertura
+14.1.1.1 tela com layout com tema de sustentabilidade logo titans customizado e 
+botao "jogue";
+14.1.1.2 na mesma tela, quando for clicado no botao jogar, o botao some e 
+vem no lugar um input text para colocar o nickname e dois botoes, ver tuto ou ñ;
+14.1.1.3 caso escolha tuto, exibir uma tela secundaria, com animação mostrando 
+a lixeira com os seus respectivos nomes;
+
+14.1.2 jogo
+tem as lixeiras e o lixo que deve ser jogado na respectiva lixeira correta;     ===>true
+implementar tempo descrescente se der tempo?                                    ===>false
+o usuario deve clicar e arrastar para a respectiva lixeira o lixo que ele acha  
+que esta correta, o js deve armazenar estes dados para a verificação posterior  
+para calculo de pontuação.                                                      ===>true
+
+14.1.2.1 pontuação
+quando o js verifica que ele conseguio acertar, ele deve somar 10 pontos        ===>true
+quando ele errar n vamos subtrair nada                                          ===>true
+quando ele colocar o item na cesta e estiver correto, deve aparecer 
+um .gif verdinho e somar pontos.                                                ===>true
+e quando ele colocar o item na cesta e estiver errado deve aparecer um 
+.gif vermelho e n somar pontos;                                                 ===>true
+
+14.1.3 fim jogo
+temos atualmente 40 itens cadastrados, ele será considerado ganhador se caso 
+conseguir acertar certa de ao menos 95% dos itens.                              ===>true
+no final do jogo deverá mostrar todos os nicknames que ja jogaram e suas 
+respectivas pontuações e a sua pontuação em relação as demais;                  ===>tah com defeito
+deve exibir um botao tentar de novo caso ele ñ foi bem, e um parabêns caso foi 
+com sucesso;                                                                    ===>true

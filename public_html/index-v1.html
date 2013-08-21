@@ -1,0 +1,674 @@
+<!--
+falta implementar:
+
+1.pontuação                                                                     ===>true
+2.ranking de pontuação de jogadores                                             ===>?
+3.colocar mais itens no jogo                                                    ===>true
+4.colocar css point no ponteiro do mouse                                        ===>true
+5. (?) depois q a pessoa colocar o item na respectiva cesta, poderiamos mostrar 
+uma imagem exibindo uma imagem se esta correro ou errado                        ===>true
+6.a tela principal do game deve conter o ranking de pontuação dos 
+gamers que ja jogaram                                                           ===>?
+6.1 implementar alguls efeitos                                                  ===>...
+6.1.1 efeito do wordpress de balançar a tela quando o o gamer errar             ===>...
+6.1.2 efeito quando o gamer acertar                                             ===>...
+6.1.3 efeito ilustrativo quando for exibir o tutorial do game                   ===>false
+6.2 depois q o jogador colocar o item na cesta, poderiamos guardar o nome dos 
+itens para exibir no final os que ele errou                                     ===>ñ fazer
+7.integração com facebook                                                       ===>false
+8.guardar informações e dados no bando mysql do jsninja                         ===>?
+9.hospedar aplicação no jsninja                                                 ===>false
+10.colocar um nome/logo bem chamativo e convidativo                             ===>false
+11.ñ esquecer de fazer uma apresentação em .ppt bem explicativa sobre o game    ===>false
+12.deve ser bem testado(!)                                                      ===>false
+
+13.tela de abertura                                                             
+13.1 deve ser limpa, conter o logo da Titans como sustentabilidade e chamando o gamer para jogar
+13.2 quando o gamer clicar em "jogue", devera aparecer uma <div> solicitando que ele coloque o seu nickname
+13.3 após ele colocar o nickname, se ele ja tiver pontuação será sobrescrita.
+13.4 depois deve perguntar se ele deseja ver o mini tutorial ou ñ
+13.5 após o tutorial, o jogo começa
+
+14 definicoes gerais do game
+14.1.telas:
+
+14.1.1 tela de abertura
+14.1.1.1 tela com layout com tema de sustentabilidade logo titans customizado e 
+botao "jogue";
+14.1.1.2 na mesma tela, quando for clicado no botao jogar, o botao some e 
+vem no lugar um input text para colocar o nickname e dois botoes, ver tuto ou ñ;
+14.1.1.3 caso escolha tuto, exibir uma tela secundaria, com animação mostrando 
+a lixeira com os seus respectivos nomes;
+
+14.1.2 jogo
+tem as lixeiras e o lixo que deve ser jogado na respectiva lixeira correta;     ===>true
+implementar tempo descrescente se der tempo?                                    ===>false
+o usuario deve clicar e arrastar para a respectiva lixeira o lixo que ele acha  
+que esta correta, o js deve armazenar estes dados para a verificação posterior  
+para calculo de pontuação.                                                      ===>true
+
+14.1.2.1 pontuação
+quando o js verifica que ele conseguio acertar, ele deve somar 10 pontos        ===>true
+quando ele errar n vamos subtrair nada                                          ===>true
+quando ele colocar o item na cesta e estiver correto, deve aparecer 
+um .gif verdinho e somar pontos.                                                ===>true
+e quando ele colocar o item na cesta e estiver errado deve aparecer um 
+.gif vermelho e n somar pontos;                                                 ===>true
+
+14.1.3 fim jogo
+temos atualmente 40 itens cadastrados, ele será considerado ganhador se caso 
+conseguir acertar certa de ao menos 95% dos itens.                              ===>true
+no final do jogo deverá mostrar todos os nicknames que ja jogaram e suas 
+respectivas pontuações e a sua pontuação em relação as demais;                  ===>tah com defeito
+deve exibir um botao tentar de novo caso ele ñ foi bem, e um parabêns caso foi 
+com sucesso;                                                                    ===>true
+
+
+
+
+
+
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Game Titans </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style type="text/css">
+            .lixo{
+                position:relative;
+            }
+            
+            fieldset{
+                width:1250px;
+                height:500px;
+/*                top:15px;
+                position:relative;*/
+            }
+            
+            .lixeiraDiv{
+                width : 200px;
+                height: 100px; 
+                border: solid black 2px;
+/*                position: absolute;
+                top:70px;*/
+            }
+            
+            #lixeiraDiv2{
+                left:220px;
+            }
+            
+            #lixeiraDiv3{
+                left:430px;
+            }
+            
+            #lixeiraDiv4{
+                left:640px;
+            }
+            
+            #lixeiraDiv5{
+                left:850px;
+            }
+            
+            #lixeiraDiv6{
+                left:1060px;
+            }
+            
+            .tipoLixoCss{
+                cursor:move;
+                width : 50px;
+                height: 50px; 
+/*                position: relative;
+                top:100px;*/
+               
+            }
+            
+            .texto1{
+                text-align: right;
+            }
+            
+        </style>
+        <script type="text/javascript">
+
+            var lixoIDUsado = new Array(),
+                lixoID      = new Array(),
+                lixoCorreto = new Array(),
+                nickname    = "",
+                imgResp     = 0,
+                imgRespCount= 0,
+                pontuacao   = 0,
+                pontValor   = 10;
+            
+            lixoCorreto[0]  = 6;
+            lixoCorreto[1]  = 6;
+            lixoCorreto[2]  = 6;
+            lixoCorreto[3]  = 6;
+            lixoCorreto[4]  = 6;
+            lixoCorreto[5]  = 6;
+            lixoCorreto[6]  = 6;
+            lixoCorreto[7]  = 6;
+            lixoCorreto[8]  = 6;
+            lixoCorreto[9]  = 6;
+            lixoCorreto[10] = 6;
+            lixoCorreto[11] = 6;
+            lixoCorreto[12] = 6;
+            lixoCorreto[13] = 6;
+            lixoCorreto[14] = 6;
+            lixoCorreto[15] = 6;
+            lixoCorreto[16] = 6;
+            lixoCorreto[17] = 6;
+            lixoCorreto[18] = 6;
+            lixoCorreto[19] = 6;
+            lixoCorreto[20] = 6;
+            lixoCorreto[21] = 6;
+            lixoCorreto[22] = 6;
+            lixoCorreto[23] = 6;
+            lixoCorreto[24] = 6;
+            lixoCorreto[25] = 6;
+            lixoCorreto[26] = 6;
+            lixoCorreto[27] = 6;
+            lixoCorreto[28] = 6;
+            lixoCorreto[29] = 6;
+            lixoCorreto[30] = 6;
+            lixoCorreto[31] = 6;
+            lixoCorreto[32] = 6;
+            lixoCorreto[33] = 6;
+            lixoCorreto[34] = 6;
+            lixoCorreto[35] = 6;
+            lixoCorreto[36] = 6;
+            lixoCorreto[37] = 6;
+            lixoCorreto[38] = 6;
+            lixoCorreto[39] = 6;
+            lixoCorreto[40] = 6;
+            
+            lixoID[0]       = "casca de Banana";
+            lixoID[1]       = "isqueiro usado";
+            lixoID[2]       = "folha de papel";
+            lixoID[3]       = "pilhas de radio";
+            lixoID[4]       = "papel aluminio";
+            lixoID[5]       = "caneta usada";
+            lixoID[6]       = "cartão de crédito vencido";
+            lixoID[7]       = "caixa de pasta de dente";
+            lixoID[8]       = "escova de dente usada";
+            lixoID[9]       = "palito de dente";
+            lixoID[10]      = "curativo";
+            lixoID[11]      = "chiclete usado";
+            lixoID[12]      = "bituca de cigarro";
+            lixoID[13]      = "papel de bala";
+            lixoID[14]      = "garafa de cachaça vazia";
+            lixoID[15]      = "pacote de salgadinho";
+            lixoID[16]      = "pacote de salgadinho1";
+            lixoID[17]      = "pacote de salgadinho2";
+            lixoID[18]      = "pacote de salgadinho3";
+            lixoID[19]      = "pacote de salgadinho4";
+            lixoID[20]      = "pacote de salgadinho5";
+            lixoID[21]      = "chiclete usado";
+            lixoID[22]      = "bituca de cigarro";
+            lixoID[23]      = "papel de bala";
+            lixoID[24]      = "garafa de cachaça vazia";
+            lixoID[25]      = "pacote de salgadinho";
+            lixoID[26]      = "pacote de salgadinho1";
+            lixoID[27]      = "pacote de salgadinho2";
+            lixoID[28]      = "pacote de salgadinho3";
+            lixoID[29]      = "pacote de salgadinho4";
+            lixoID[30]      = "pacote de salgadinho5";
+            lixoID[30]      = "curativo";
+            lixoID[31]      = "chiclete usado";
+            lixoID[32]      = "bituca de cigarro";
+            lixoID[33]      = "papel de bala";
+            lixoID[34]      = "garafa de cachaça vazia";
+            lixoID[35]      = "pacote de salgadinho";
+            lixoID[36]      = "pacote de salgadinho1";
+            lixoID[37]      = "pacote de salgadinho2";
+            lixoID[38]      = "pacote de salgadinho3";
+            lixoID[39]      = "pacote de salgadinho4";
+            lixoID[40]      = "pacote de salgadinho5";
+            
+            function allowDrop(ev){
+                ev.preventDefault();
+            }
+
+            function drag(ev){
+                ev.dataTransfer.setData("Text",ev.target.id);
+            }
+
+            function drop(ev){
+                var data=ev.dataTransfer.getData("Text");
+                ev.target.appendChild(document.getElementById(data));
+                ev.preventDefault();
+            }
+            
+            function pontuacaoGame(idDivLixeira,lixoID){
+                console.log("puntuacaoGame => divLixeira=>"+idDivLixeira+" lixoID=>"+lixoID);
+                if(idDivLixeira===0){
+                    document.getElementById('pontuacao').innerHTML="0";
+                }else if(idDivLixeira>0){
+                    console.log("js=>2");
+                    if(respostaCorreta(idDivLixeira,lixoID)){
+                        console.log("js=>3 pontos=> "+pontuacao);
+                        pontuacao += pontValor;
+                        console.log("js=>4 pontos=> "+pontuacao);
+                        document.getElementById('pontuacao').innerHTML=pontuacao;
+                        imgRespCount = 0;
+                        imgResp=self.setInterval(
+                            function(){
+                                console.log("js=>6");
+                                exibeRespostaIMG(idDivLixeira,1)
+                            },
+                            1000
+                        );
+                        
+                    }else{
+                        imgRespCount = 0;
+                        imgResp=self.setInterval(
+                            function(){
+                                console.log("js=>13");
+                                exibeRespostaIMG(idDivLixeira,0)
+                            },
+                            1000
+                        );
+                        
+                    }
+                }
+            }
+
+            function exibeRespostaIMG(idDivLixeira,respCorreta){
+                                console.log("js=>7");
+                
+                if((respCorreta==1)       &&(imgRespCount==0)){
+                                console.log("js=>8");
+                    document.getElementById('imgCorretoDiv'+idDivLixeira).style.display='block';
+                    
+                }else if((respCorreta==1) &&(imgRespCount==1)){
+                                console.log("js=>9");
+                    document.getElementById('imgCorretoDiv'+idDivLixeira).style.display='none';
+                    window.clearInterval(imgResp);
+                    
+                }else if((respCorreta==0) &&(imgRespCount==0)){
+                                console.log("js=>10");
+                    document.getElementById('imgErradaDiv'+idDivLixeira).style.display='block';
+                    
+                }else if((respCorreta==0) &&(imgRespCount==1)){
+                                console.log("js=>11");
+                    document.getElementById('imgErradaDiv'+idDivLixeira).style.display='none';
+                    window.clearInterval(imgResp);
+                }
+                                console.log("js=>12");
+                
+                imgRespCount += 1;
+            
+            }
+
+            function respostaCorreta(idDivLixeira,lixoID){
+                if(lixoCorreto[lixoID]==idDivLixeira){
+                    return true;
+                }else{
+                    return false;
+                }
+                
+            }
+            
+            function getNextRandom(idDivLixeira){
+                console.log("js=>0 pontos=> "+pontuacao);
+                var maxRandom   = lixoID.length,
+                    randomCount = lixoIDUsado.length,
+                    idArray     = getRandom(maxRandom);
+//                if(randomCount <= maxRandom){
+                if(randomCount <= 2){
+                    if(lixoIDUsado[idArray]!=="indefined"){
+                        idArray   = getRandom(maxRandom);
+                    }
+                    console.log("js=>1 pontos=> "+pontuacao);
+                    pontuacaoGame(idDivLixeira,idArray);
+                    console.log("js=>5");
+                    setLixoUsado(idArray);
+                    document.getElementById('lixoID'+randomCount).innerHTML=lixoID[idArray];
+                }else{
+                    resetLixoUsado();
+                }
+            }
+            
+            function getRandom(maxRandom){
+                return (Math.floor(Math.random() * maxRandom));
+            }
+            
+            function setLixoUsado(idLixo){
+                lixoIDUsado.push(idLixo);
+            }
+            
+            function resetLixoUsado(){ 
+                var msg = ""
+                document.getElementById('telaGame').style.display='none';
+                document.getElementById('fimGame').style.display='block';
+                
+                if(pontuacao >= 350){
+                    msg = "parabêns "+nickname+", sua pontuação foi de "+pontuacao;
+                }else{
+                    msg = "xiiii... tente novamente! seus pontos foram =>"+pontuacao;
+                }
+                document.getElementById('respFimGame').innerHtml=msg;
+//                shake(2);
+//                reseta variaveis???
+                lixoIDUsado = new Array();
+                lixoID      = new Array();
+            }
+
+            function shake(n){
+                if(window.moveBy){
+                    console.log("js=>treme-treme");
+                    for (i = 10; i > 0; i--){
+                        for (j = n; j > 0; j--){
+                    console.log("js=>1treme-treme");
+                            window.moveBy(0,i);
+                    console.log("js=>2treme-treme");
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                            window.moveBy(0,i);
+                            window.moveBy(i,0);
+                            window.moveBy(0,-i);
+                            window.moveBy(-i,0);
+                        }
+                    }
+               }
+            }
+
+            function novoGame(){
+                document.getElementById('aberturaGame').style.display='none';
+                
+                if(confirm("Deseja ver o tutorial?")){
+                    document.getElementById('tutorialGame').style.display='block';
+                }else{
+                    document.getElementById('telaGame').style.display='block';
+                }
+                nickname = document.getElementById('nickname').value;
+            }
+
+            function inicializarNovoGame(){
+                document.getElementById('tutorialGame').style.display='none';
+                document.getElementById('telaGame').style.display='block';
+                
+            }
+
+            window.onload = function(){
+                getNextRandom(0);
+                pontuacaoGame(0,0);
+            }
+            
+//            lixeira1 = document.getElementById('lixeiraDiv1');
+//            lixeira1.ondrop(event) = function(){
+                
+//            }
+            
+        </script>
+    </head>
+    <body>
+        <fieldset>
+            <legend>
+                Game Titans
+            </legend>
+            <div id="aberturaGame" style="display:block;">
+                <label for="nickname">Digite o Nickname</label>
+                <input type="text"   id="nickname" value="" />
+                <input type="button" id="novoGame" value="Novo Game" onclick="novoGame();" />
+            </div>
+            <div id="tutorialGame" style="display:none;">
+                tutorial game
+                <input type="button" id="novoGame2" value="Novo Game" onclick="inicializarNovoGame();" />
+                <!-- usar as img com cada lixeira para mostrar ao usuario como jogar -->
+            </div>
+            <div id="fimGame" style="display:none;">
+                fim game
+                <input type="button" id="novoGame3" value="Novo Game" onclick="inicializarNovoGame();" /> 
+                <span id="respFimGame"></span>
+            </div>
+            <div id="telaGame" style="display:none;">
+                <span id="texto1" class="texto1">
+                    Voc&ecirc; sabe qual é o destino correto para cada lixo?
+                </span>
+                <br/><br/>
+                Pontua&ccedil;&atilde;o =><span id="pontuacao"></span>
+                <br/><br/>
+                <div id="lixeiras">
+                    <!--
+                    +tipos de lixeiras:
+
+                    -amarela   : metal
+                    -verde     : vidro
+                    -azul      : papel
+                    -vermelhas : plastico
+                    -cinza     : materiais não recicláveis
+                    -branco    : materiais infectantes
+                    -->
+
+                    <div id="lixeiraDiv1" class="lixeiraDiv" ondrop="drop(event);getNextRandom('1');" ondragover="allowDrop(event);" draggable="false" >
+                        <input type="radio" name="tipoLixeira" value="1" id="tipoLixeira1" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv1" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv1"  style="display:none;" /> 
+                        <label for="tipoLixeira1">Lixeira Amarela </label>
+                    </div> 
+
+                    <div id="lixeiraDiv2" class="lixeiraDiv" ondrop="drop(event);getNextRandom('2');" ondragover="allowDrop(event);">
+                        <input type="radio" name="tipoLixeira" value="2" id="tipoLixeira2" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv2" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv2"  style="display:none;" /> 
+                        <label for="tipoLixeira2">Lixeira Verde   </label>
+                    </div> 
+
+                    <div id="lixeiraDiv3" class="lixeiraDiv" ondrop="drop(event);getNextRandom('3');" ondragover="allowDrop(event);">
+                        <input type="radio" name="tipoLixeira" value="3" id="tipoLixeira3" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv3" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv3"  style="display:none;" /> 
+                        <label for="tipoLixeira3">Lixeira Azul    </label>
+                    </div> 
+
+                    <div id="lixeiraDiv4" class="lixeiraDiv" ondrop="drop(event);getNextRandom('4');" ondragover="allowDrop(event);">
+                        <input type="radio" name="tipoLixeira" value="4" id="tipoLixeira4" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv4" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv4"  style="display:none;" /> 
+                        <label for="tipoLixeira4">Lixeira Vermelha</label>
+                    </div> 
+
+                    <div id="lixeiraDiv5" class="lixeiraDiv" ondrop="drop(event);getNextRandom('5');" ondragover="allowDrop(event);">
+                        <input type="radio" name="tipoLixeira" value="5" id="tipoLixeira5" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv5" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv5"  style="display:none;" /> 
+                        <label for="tipoLixeira5">Lixeira Cinza   </label>
+                    </div> 
+
+                    <div id="lixeiraDiv6" class="lixeiraDiv" ondrop="drop(event);getNextRandom('6');" ondragover="allowDrop(event);">
+                        <input type="radio" name="tipoLixeira" value="6" id="tipoLixeira6" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv6" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv6"  style="display:none;" /> 
+                        <label for="tipoLixeira6">Lixeira Branca  </label>
+                    </div> 
+
+                </div>
+                <br/><br/>
+                <div class="lixo">
+                    <!-- 
+                    aqui será exibido randomicamente o tipos de lixos que poderão ser jogados nas respectivas lixeiras
+                    -->
+                        <!--<img class="tipoLixoCss" id="lixoID1" draggable="true" ondragstart="drag(event);" src="img/cascaBanana.jpeg" alt="Casca de Banana" />-->
+                        <span id="lixoID0"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></span>
+                        <div id="lixoID1"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID2"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID3"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID4"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID5"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID6"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID7"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID8"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID10" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID11" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID12" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID13" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID14" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID15" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID16" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID17" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID18" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID19" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID20" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID21" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID22" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID23" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID24" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID25" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID26" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID27" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID28" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID29" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID30" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID31" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID32" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID33" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID34" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID35" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID36" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID37" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID38" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID39" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID40" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+
+                </div>
+            </div>
+        </fieldset>
+    </body>
+</html>

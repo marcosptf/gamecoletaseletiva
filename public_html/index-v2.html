@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Game Titans </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="css/estilos.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="js/constantes.js"></script>
+        <script type="text/javascript" src="js/functions.js"></script>
+    </head>
+    <body>
+        <fieldset>
+            <legend>
+                Game Titans
+            </legend>
+            
+            <div id="aberturaGame" style="display:block;">
+                <label for="nickname">Digite o Nickname</label>
+                <input type="text"   id="nickname" value="" />
+                <br/>
+                <input type="button" id="novoGame" value="Novo Game" onclick="novoGame();" />
+            </div>
+            
+            <div id="tutorialGame" style="display:none;">
+                tutorial game
+                <input type="button" id="novoGame2" value="Novo Game" onclick="inicializarNovoGame();" />
+                <!-- usar as img com cada lixeira para mostrar ao usuario como jogar -->
+            </div>
+            
+            <div id="fimGame" style="display:none;">
+                fim game
+                <input type="button" id="novoGame3" value="Novo Game" onclick="inicializarNovoGame();" /> 
+                <span id="respFimGame"></span>
+            </div>
+            
+            <div id="telaGame" style="display:none;">
+                <span id="texto1" class="texto1">
+                    Voc&ecirc; sabe qual é o destino correto para cada lixo?
+                </span>
+                <br/><br/>
+                Pontua&ccedil;&atilde;o =><span id="pontuacao"></span>
+                <br/><br/>
+                <div id="lixeiras">
+                    <!--
+                    +tipos de lixeiras:
+
+                    -amarela   : metal
+                    -verde     : vidro
+                    -azul      : papel
+                    -vermelhas : plastico
+                    -cinza     : materiais não recicláveis
+                    -branco    : materiais infectantes
+                    -->
+
+                    <div id="lixeiraDiv1" class="lixeiraDiv" ondrop="drop(event);getNextRandom('1');" ondragover="allowDrop(event);" draggable="false" >
+                        <input type="radio" name="tipoLixeira" value="1" id="tipoLixeira1" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv1" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv1"  style="display:none;" /> 
+                        <label for="tipoLixeira1">Lixeira Amarela </label>
+                    </div> 
+
+                    <div id="lixeiraDiv2" class="lixeiraDiv" ondrop="drop(event);getNextRandom('2');" ondragover="allowDrop(event);">
+                        <input type="radio" name="tipoLixeira" value="2" id="tipoLixeira2" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv2" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv2"  style="display:none;" /> 
+                        <label for="tipoLixeira2">Lixeira Verde   </label>
+                    </div> 
+
+                    <div id="lixeiraDiv3" class="lixeiraDiv" ondrop="drop(event);getNextRandom('3');" ondragover="allowDrop(event);">
+                        <input type="radio" name="tipoLixeira" value="3" id="tipoLixeira3" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv3" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv3"  style="display:none;" /> 
+                        <label for="tipoLixeira3">Lixeira Azul    </label>
+                    </div> 
+
+                    <div id="lixeiraDiv4" class="lixeiraDiv" ondrop="drop(event);getNextRandom('4');" ondragover="allowDrop(event);">
+                        <input type="radio" name="tipoLixeira" value="4" id="tipoLixeira4" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv4" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv4"  style="display:none;" /> 
+                        <label for="tipoLixeira4">Lixeira Vermelha</label>
+                    </div> 
+
+                    <div id="lixeiraDiv5" class="lixeiraDiv" ondrop="drop(event);getNextRandom('5');" ondragover="allowDrop(event);">
+                        <input type="radio" name="tipoLixeira" value="5" id="tipoLixeira5" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv5" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv5"  style="display:none;" /> 
+                        <label for="tipoLixeira5">Lixeira Cinza   </label>
+                    </div> 
+
+                    <div id="lixeiraDiv6" class="lixeiraDiv" ondrop="drop(event);getNextRandom('6');" ondragover="allowDrop(event);">
+                        <input type="radio" name="tipoLixeira" value="6" id="tipoLixeira6" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv6" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv6"  style="display:none;" /> 
+                        <label for="tipoLixeira6">Lixeira Branca  </label>
+                    </div> 
+
+                </div>
+                <br/><br/>
+                <div class="lixo">
+                    <!-- 
+                    aqui será exibido randomicamente o tipos de lixos que poderão ser jogados nas respectivas lixeiras
+                    -->
+                        <!--<img class="tipoLixoCss" id="lixoID1" draggable="true" ondragstart="drag(event);" src="img/cascaBanana.jpeg" alt="Casca de Banana" />-->
+                        <span id="lixoID0"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></span>
+                        <div id="lixoID1"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID2"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID3"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID4"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID5"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID6"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID7"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID8"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID10" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID11" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID12" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID13" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID14" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID15" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID16" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID17" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID18" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID19" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID20" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID21" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID22" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID23" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID24" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID25" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID26" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID27" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID28" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID29" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID30" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID31" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID32" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID33" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID34" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID35" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID36" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID37" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID38" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID39" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID40" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+
+                </div>
+            </div>
+        </fieldset>
+    </body>
+</html>

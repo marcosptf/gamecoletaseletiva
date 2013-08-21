@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Game Titans </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="css/estilos.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="js/constantes.js"></script>
+        <script type="text/javascript" src="js/functions.js"></script>
+    </head>
+    <body>
+            <span id="msgGame1" style="display:none;">
+                Deseja ver o tutorial?
+                <br/>
+                <input type="button" value="Sim" onclick="novoGame2();" />
+                <input type="button" value="Não" onclick="novoGame3();" />
+            </span>
+            <div style="background-image:url('img/fundo_editado.png'); width: 900px; height: 800px; repeat: now;background-size:100% 100%;
+-moz-border-radius: 10px; /* Para Firefox */
+-webkit-border-radius: 10px; /*Para Safari e Chrome */
+border-radius: 10px; /* Para Opera 10.5+*/
+-webkit-background-size: 100% 100%;
+-o-background-size: 100% 100%;
+-khtml-background-size: 100% 100%;
+-moz-background-size: 100% 100%;width: 70%; padding: 5px; margin: 0 auto; border: 1px solid #ccc;vertical-align: middle;" id="aberturaGame" style="display:block;" >
+                <label for="nickname" style="font-family: billo; font-size: 40px;" >DIGITE SEU NOME</label>&nbsp;&nbsp;&nbsp;
+                <input type="text"   id="nickname" value="" />
+                <input type="button" id="novoGame" value="Iniciar" onclick="novoGame2();" />
+            </div>
+            
+            <div id="tutorialGame" style="display:none; background-image:url('img/lixo_seletivo.png'); width: 1200px; height: 800px; repeat: now;background-size:100% 100%;
+-moz-border-radius: 10px; /* Para Firefox */
+-webkit-border-radius: 10px; /*Para Safari e Chrome */
+border-radius: 10px; /* Para Opera 10.5+*/
+-webkit-background-size: 100% 100%;
+-o-background-size: 100% 100%;
+-khtml-background-size: 100% 100%;
+-moz-background-size: 100% 100%;width: 70%; padding: 5px; margin: 0 auto; border: 1px solid #ccc;vertical-align: middle;">
+                <input type="button" id="novoGame2" value="Jogar" onclick="inicializarNovoGame();" />
+                <!-- usar as img com cada lixeira para mostrar ao usuario como jogar -->
+            </div>
+            
+            <div id="fimGame" style="display:none; background-image:url('img/tela_final.png'); width: 1200px; height: 800px; repeat: now;background-size:100% 100%;
+-moz-border-radius: 10px; /* Para Firefox */
+-webkit-border-radius: 10px; /*Para Safari e Chrome */
+border-radius: 10px; /* Para Opera 10.5+*/
+-webkit-background-size: 100% 100%;
+-o-background-size: 100% 100%;
+-khtml-background-size: 100% 100%;
+-moz-background-size: 100% 100%;width: 70%; padding: 5px; margin: 0 auto; border: 1px solid #ccc;vertical-align: middle;" id="aberturaGame" style="display:block;" >
+                <input type="button" id="novoGame3" value="Novo Game" onclick="document.location.reload(true)" />
+                <br />
+                <br />
+                <span style="font-family: billo; font-size: 50px;" id="span_pontos" >Total de Pontos: 30 </span>
+                
+                <span id="respFimGame"></span>
+            </div>
+            
+            <div id="telaGame" style="display:none; background-image:url('img/paisagem-da-cidade.jpg'); background-repeat: no-repeat; width: 1200px; height: 800px; repeat: now;background-size:100% 100%;
+-moz-border-radius: 10px; /* Para Firefox */
+-webkit-border-radius: 10px; /*Para Safari e Chrome */
+border-radius: 10px; /* Para Opera 10.5+*/
+-webkit-background-size: 100% 100%;
+-o-background-size: 100% 100%;
+-khtml-background-size: 100% 100%;
+-moz-background-size: 100% 100%;width: 70%; padding: 5px; margin: 0 auto; border: 1px solid #ccc;vertical-align: middle;">
+                <span id="texto1" class="texto1" style="font-family: billo; font-size: 50px;">
+                    QUAL É O DESTINO CORRETO PARA CADA LIXO?
+                </span>
+                <br/><br/>
+                <span style="font-family: billo; font-size: 50px;">Pontos:</span>
+                <span style="font-family: billo; font-size: 50px; margin: left: 30px;" id="pontuacao"></span>
+                <br/><br/>
+                <div id="lixeiras" >
+                    <!--
+                    +tipos de lixeiras:
+
+                    -amarela   : metal
+                    -verde     : vidro
+                    -azul      : papel
+                    -vermelhas : plastico
+                    -cinza     : materiais não recicláveis
+                    -branco    : materiais infectantes
+                    -->
+                    <table border="0">
+                        <tr>
+                        <td>
+                        <div id="lixeiraDiv1" class="lixeiraDiv" ondrop="drop(event);getNextRandom('1');" ondragover="allowDrop(event);" draggable="false" style="background-image:url('img/lixeira-am.png'); width: 250px; height: 250px; repeat: now;background-size:100% 100%;
+-webkit-background-size: 100% 100%;
+-o-background-size: 100% 100%;
+-khtml-background-size: 100% 100%;
+-moz-background-size: 100% 100%; padding: 5px; margin: 0 auto; vertical-align: middle;" >
+                        <input type="hidden" name="tipoLixeira" value="1" id="tipoLixeira1" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv1" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv1"  style="display:none;" /> 
+                        <label for="tipoLixeira1"></label>
+                    </div> 
+                        </td>
+                        <td>
+
+                    <div id="lixeiraDiv2" class="lixeiraDiv" ondrop="drop(event);getNextRandom('2');" ondragover="allowDrop(event);" style="background-image:url('img/lixeira-vd.png'); width: 250px; height: 250px; repeat: now;background-size:100% 100%;
+-webkit-background-size: 100% 100%;
+-o-background-size: 100% 100%;
+-khtml-background-size: 100% 100%;
+-moz-background-size: 100% 100%; padding: 5px; margin: 0 auto; vertical-align: middle;">
+                        <input type="hidden" name="tipoLixeira" value="2" id="tipoLixeira2" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv2" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv2"  style="display:none;" /> 
+                        <label for="tipoLixeira2"></label>
+                    </div> 
+                        </td>
+                        <td>
+
+                    <div id="lixeiraDiv3" class="lixeiraDiv" ondrop="drop(event);getNextRandom('3');" ondragover="allowDrop(event);" style="background-image:url('img/lixeira-azul.png'); width: 250px; height: 250px; repeat: now;background-size:100% 100%;
+-webkit-background-size: 100% 100%;
+-o-background-size: 100% 100%;
+-khtml-background-size: 100% 100%;
+-moz-background-size: 100% 100%; padding: 5px; margin: 0 auto; vertical-align: middle;">
+                        <input type="hidden" name="tipoLixeira" value="3" id="tipoLixeira3" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv3" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv3"  style="display:none;" /> 
+                        <label for="tipoLixeira3"></label>
+                    </div> 
+                        </td>
+
+                        <td>
+                    <div id="lixeiraDiv4" class="lixeiraDiv" ondrop="drop(event);getNextRandom('4');" ondragover="allowDrop(event);" style="background-image:url('img/lixeira-vm.png'); width: 250px; height: 250px; repeat: now;background-size:100% 100%;
+-webkit-background-size: 100% 100%;
+-o-background-size: 100% 100%;
+-khtml-background-size: 100% 100%;
+-moz-background-size: 100% 100%; padding: 5px; margin: 0 auto;vertical-align: middle;">
+                        <input type="hidden" name="tipoLixeira" value="4" id="tipoLixeira4" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv4" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv4"  style="display:none;" /> 
+                        <label for="tipoLixeira4"></label>
+                    </div> 
+                        </td>
+
+                        <td>
+                    <div id="lixeiraDiv5" class="lixeiraDiv" ondrop="drop(event);getNextRandom('5');" ondragover="allowDrop(event);" style="background-image:url('img/lixeira-ma.png'); width: 250px; height: 250px; repeat: now;background-size:100% 100%;
+-webkit-background-size: 100% 100%;
+-o-background-size: 100% 100%;
+-khtml-background-size: 100% 100%;
+-moz-background-size: 100% 100%; padding: 5px; margin: 0 auto;vertical-align: middle;">
+                        <input type="hidden" name="tipoLixeira" value="5" id="tipoLixeira5" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv5" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv5"  style="display:none;" /> 
+                        <label for="tipoLixeira5"></label>
+                    </div> 
+                        </td>
+                        <td>
+                        </td>
+
+                        <td>
+                     <!-- 
+                    <div id="lixeiraDiv6" class="lixeiraDiv" ondrop="drop(event);getNextRandom('6');" ondragover="allowDrop(event);">
+                        <input type="radio" name="tipoLixeira" value="6" id="tipoLixeira6" /> 
+                        <img src="img/apply.png" alt="" id="imgCorretoDiv6" style="display:none;" /> 
+                        <img src="img/fire.png"  alt="" id="imgErradaDiv6"  style="display:none;" /> 
+                        <label for="tipoLixeira6">Lixeira Branca  </label>
+                    </div> 
+                        </td> -->
+                        </tr>
+                        </table>
+
+                </div>
+                <br/><br/>
+                <center>
+                <div class="lixo" style="font-family: Arial; font-size: 20px; font-weight: bold; width: 500px;" nowrap>
+                    <!-- 
+                    aqui será exibido randomicamente o tipos de lixos que poderão ser jogados nas respectivas lixeiras
+                    -->
+                        <!--<img class="tipoLixoCss" id="lixoID1" draggable="true" ondragstart="drag(event);" src="img/cascaBanana.jpeg" alt="Casca de Banana" />-->
+                        <span id="lixoID0"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></span>
+                        <div id="lixoID1"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID2"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID3"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID4"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID5"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID6"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID7"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID8"  class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID10" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID11" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID12" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID13" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID14" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID15" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID16" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID17" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID18" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID19" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID20" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID21" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID22" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID23" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID24" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID25" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID26" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID27" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID28" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID29" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID30" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID31" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID32" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID33" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID34" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID35" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID36" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID37" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID38" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID39" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+                        <div id="lixoID40" class="tipoLixoCss" draggable="true" ondragstart="drag(event);" ></div>
+
+                </div>
+                </center>
+            </div>
+    </body>
+</html>
