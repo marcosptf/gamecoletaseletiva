@@ -10,6 +10,7 @@
                 imgResp     = 0,
                 imgRespCount= 0,
                 pontuacao   = 0,
+                lixoIDAtual = 0,
                 pontValor   = 10;
             
             lixoCorreto[0]  = 5;
@@ -75,25 +76,25 @@
             lixoID[18]      = "roupas velhas";
             lixoID[19]      = "monitores CRT";
             lixoID[20]      = "bicicleta velha";
-//            lixoID[21]      = "chiclete usado";
-//            lixoID[22]      = "bituca de cigarro";
-//            lixoID[23]      = "papel de bala";
-//            lixoID[24]      = "garafa de cachaça vazia";
-//            lixoID[25]      = "pacote de salgadinho";
-//            lixoID[26]      = "pacote de salgadinho1";
-//            lixoID[27]      = "pacote de salgadinho2";
-//            lixoID[28]      = "pacote de salgadinho3";
-//            lixoID[29]      = "pacote de salgadinho4";
-//            lixoID[30]      = "pacote de salgadinho5";
-//            lixoID[30]      = "curativo";
-//            lixoID[31]      = "chiclete usado";
-//            lixoID[32]      = "bituca de cigarro";
-//            lixoID[33]      = "papel de bala";
-//            lixoID[34]      = "garafa de cachaça vazia";
-//            lixoID[35]      = "pacote de salgadinho";
-//            lixoID[36]      = "pacote de salgadinho1";
-//            lixoID[37]      = "pacote de salgadinho2";
-//            lixoID[38]      = "pacote de salgadinho3";
-//            lixoID[39]      = "pacote de salgadinho4";
-//            lixoID[40]      = "pacote de salgadinho5";
-//            
+/*            lixoID[21]      = "chiclete usado";
+            lixoID[22]      = "bituca de cigarro";
+            lixoID[23]      = "pacote de salgadinho";
+            lixoID[24]      = "garafa de cachaça vazia";
+            lixoID[25]      = "pacote de salgadinho";
+            lixoID[26]      = "pacote de salgadinho1";
+            lixoID[27]      = "pacote de salgadinho2";
+            lixoID[28]      = "pacote de salgadinho3";
+            lixoID[29]      = "pacote de salgadinho4";
+            lixoID[30]      = "pacote de salgadinho5";
+            lixoID[30]      = "curativo";
+            lixoID[31]      = "chiclete usado";
+            lixoID[32]      = "bituca de cigarro";
+            lixoID[33]      = "papel de bala";
+            lixoID[34]      = "garafa de cachaça vazia";
+            lixoID[35]      = "pacote de salgadinho";
+            lixoID[36]      = "pacote de salgadinho1";
+            lixoID[37]      = "pacote de salgadinho2";
+            lixoID[38]      = "pacote de salgadinho3";
+            lixoID[39]      = "pacote de salgadinho4";
+            lixoID[40]      = "pacote de salgadinho5";
+*/
