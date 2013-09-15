@@ -6,13 +6,21 @@
         Purpose of the stylesheet follows.
 */
 
+@font-face{
+    font-family:"billo";
+    font-weight:normal;
+    font-style:normal;
+    src:url("fonts/billo.ttf")
+        format("truetype");
+}
+
 .lixo{
     position:relative;
 }
 
 fieldset{
-    width: 2000px;
-    height: 1000px;
+    width: 760px;
+    height: 900px;
 /*                top:15px;
     position:relative;*/
 }
