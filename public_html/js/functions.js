@@ -8,7 +8,14 @@
                 ev.preventDefault();
             }
 
-            function drag(ev){
+            function getLixoEscolhido(lixoIDEscolhido){
+                console.log("function getLixoEscolhido(); lixoEscolhido=>"+lixoIDEscolhido);
+                lixoIDAtual = lixoIDEscolhido;
+            }
+
+            function drag(ev,lixoIDEscolhido){
+//                console.log("function drag(); lixoEscolhido=>"+lixoIDEscolhido);
+//                lixoIDAtual = lixoIDEscolhido;
                 ev.dataTransfer.setData("Text",ev.target.id);
             }
 
@@ -19,15 +26,14 @@
             }
             
             function pontuacaoGame(idDivLixeira,lixoID){
-                console.log("puntuacaoGame => divLixeira=>"+idDivLixeira+" lixoID=>"+lixoID);
+                console.log("puntuacaoGame => divLixeira=>"+idDivLixeira+" plixoID=>"+lixoIDAtual);
                 if(idDivLixeira===0){
                     document.getElementById('pontuacao').innerHTML="0";
                 }else if(idDivLixeira>0){
                     console.log("js=>2");
-                    if(respostaCorreta(idDivLixeira,lixoID)){
-                        console.log("js=>3 pontos=> "+pontuacao);
+                    if(respostaCorreta(idDivLixeira,lixoIDAtual)){
+                        console.log("js=>pontuou pontos=> "+pontuacao);
                         pontuacao += pontValor;
-                        console.log("js=>4 pontos=> "+pontuacao);
                         document.getElementById('pontuacao').innerHTML=pontuacao;
                         imgRespCount = 0;
                         imgResp=self.setInterval(
@@ -80,9 +86,13 @@
             }
 
             function respostaCorreta(idDivLixeira,lixoID){
+//                if(lixoCorreto[lixoID]==idDivLixeira){
+                console.log("jsDebugger=> lixo1=>"+lixoID+" lixo2=>"+lixoCorreto[lixoID]+" idLixeira=>"+idDivLixeira);
                 if(lixoCorreto[lixoID]==idDivLixeira){
+                console.log("jsDebugger=> resp correta true");
                     return true;
                 }else{
+                console.log("jsDebugger=> resp correta false");
                     return false;
                 }
                 
@@ -93,8 +103,7 @@
                 var maxRandom   = lixoID.length,
                     randomCount = lixoIDUsado.length,
                     idArray     = getRandom(maxRandom);
-//                if(randomCount <= maxRandom){
-                if(randomCount <= 5){
+                if(randomCount <= 10){
                     if(lixoIDUsado[idArray]!=="indefined"){
                         idArray   = getRandom(maxRandom);
                     }
@@ -103,6 +112,7 @@
                     console.log("js=>5");
                     setLixoUsado(idArray);
                     document.getElementById('lixoID'+randomCount).innerHTML=lixoID[idArray];
+                    lixoIDAtual = idArray;
                 }else{
                     resetLixoUsado();
                 }
@@ -126,7 +136,7 @@
                 }else{
                     msg = "xiiii... tente novamente! seus pontos foram =>"+pontuacao;
                 }
-                document.getElementById('span_pontos').innerHtml=msg;
+                document.getElementById('respFimGame').innerHTML=pontuacao;
 //                shake(2);
 //                reseta variaveis???
                 lixoIDUsado = new Array();
